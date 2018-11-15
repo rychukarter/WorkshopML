@@ -6,6 +6,8 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+
 
 # Read data from file (into DataFrame)
 data = pd.read_excel("mlr03.xls")
@@ -51,8 +53,9 @@ J = utl.cost_function(X_train, Y_train, theta)
 print("After GD theta: ", theta)
 print("After GD J = ", J)
 Y_predicted = np.dot(X_test, theta)
+print(Y_test.values)
 print(Y_predicted)
-
+print(r2_score(Y_test, Y_predicted))
 
 # Linear Regression training
 regression = LinearRegression(normalize=False)
@@ -66,4 +69,7 @@ plt.figure()
 plt.plot(X_test["EXAM1"], Y_test, "go")
 plt.plot(X_test["EXAM1"], Y_predicted_sk, "bx")
 plt.plot(X_test["EXAM1"], Y_predicted, "rx")
+plt.show()
+print(r2_score(Y_test, Y_predicted_sk))
+utl.plot_error_histogram(Y_test, Y_predicted_sk)
 plt.show()
