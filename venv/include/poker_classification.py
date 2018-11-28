@@ -5,6 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import time
 from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 
 # 1. Import data as data frame
 print("Step 1: import data as data frame")
@@ -15,22 +16,22 @@ print(df.info())
 print(df.head())
 
 
-# # 2. Data normalization and scaling
-# print("\nStep 2: Data normalization and scaling")
-#
-# scaler = MinMaxScaler()
-# scaled_df = pd.DataFrame(scaler.fit_transform(df), columns=list(df.columns.values))
-# print(scaled_df.head())
+# 2. Data normalization and scaling
+print("\nStep 2: Data normalization and scaling")
+
+scaler = MinMaxScaler()
+scaled_df = pd.DataFrame(scaler.fit_transform(df), columns=list(df.columns.values))
+print(scaled_df.head())
 
 
-# # 3. Train test split
-# print("\nStep 3: split data by train test split")
-#
-# X = np.array(scaled_df.drop('Class', axis=1))
-# y = np.array(df['Class'])
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)
-# print(X_train.size)
-# print(X_test.size)
+# 3. Train test split
+print("\nStep 3: split data by train test split")
+
+X = np.array(scaled_df.drop('Class', axis=1))
+y = np.array(df['Class'])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)
+print(X_train.size)
+print(X_test.size)
 
 # # 4. Linear SVM method
 # from sklearn.svm import LinearSVC
@@ -72,3 +73,16 @@ print(df.head())
 #         errors += 1
 # print("Accuracy: " + str(1 - errors/np.size(y_test)))
 # print("Accuracy by library: " + str(rbf_cls.score(X_test, y_test)))
+
+
+# 6. Multilayer perceptron
+print("\n6. Multilayer perceptron")
+start = time.time()
+mlp_cls = MLPClassifier()
+mlp_cls.fit(X_train, y_train)
+end = time.time()
+print("Learning time: " + str(int(end - start)) + " seconds")
+
+print(mlp_cls.get_params())
+
+print("Accuracy: " + str(mlp_cls.score(X_test, y_test)))
