@@ -11,7 +11,7 @@ from sklearn.neural_network import MLPClassifier
 print("Step 1: import data as data frame")
 
 df = pd.read_csv("data/poker/poker-hand-data.csv")
-df = df.sample(n=10000, random_state=100)
+df = df.sample(n=100000, random_state=100)
 print(df.info())
 print(df.head())
 
@@ -78,7 +78,7 @@ print(X_test.size)
 # 6. Multilayer perceptron
 print("\n6. Multilayer perceptron")
 start = time.time()
-mlp_cls = MLPClassifier()
+mlp_cls = MLPClassifier(hidden_layer_sizes=[100, 100, 100], max_iter=10000, alpha=0.001)
 mlp_cls.fit(X_train, y_train)
 end = time.time()
 print("Learning time: " + str(int(end - start)) + " seconds")
